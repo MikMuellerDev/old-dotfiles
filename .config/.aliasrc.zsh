@@ -32,7 +32,18 @@ command -v wl-copy >/dev/null && { alias setclip='wl-copy'; alias getclip='wl-pa
 
 
 alias lelcat='bash -c "$(curl -fsSL https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/meow.sh)"'
-alias cl='echo "nein"'
+cl () {
+    if [[ -f "$HOME/.clear_count.txt" ]]; then
+        count="$(cat "$HOME/.clear_count.txt")"
+    else
+        count=0
+    fi
+
+    count=$(( count + 1 ))
+    echo "Stop it. You didn't behave $count times..."
+
+    echo "$count" > "$HOME/.clear_count.txt"
+}
 alias poof='shutdown -P now'
 alias 'cd..'='cd ..'
 alias myip='curl ipinfo.io/ip'
