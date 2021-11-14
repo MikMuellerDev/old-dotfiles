@@ -15,6 +15,7 @@
     show_titlebar = False
     scrollback_lines = 10000000
     scrollback_infinite = True
+    palette = "#2e3436:#ed333b:#41b64a:#e4ba3e:#3c80aa:#9e59af:#3de2e2:#f6f5f4:#555753:#f66151:#4b8f3a:#ac982c:#385dd5:#9242a6:#71f6f6:#c0bfbc"
     use_system_font = False
     copy_on_selection = True
   [[mik]]
