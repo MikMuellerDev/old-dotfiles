@@ -41,6 +41,7 @@ cl () {
 
     count=$(( count + 1 ))
     echo "Stop it. You didn't behave $count times..."
+    qdbus org.kde.KWin /KWin org.kde.KWin.nextDesktop
 
     echo "$count" > "$HOME/.clear_count.txt"
 }
