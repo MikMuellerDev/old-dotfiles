@@ -131,7 +131,6 @@ cl () {
 }
 alias poof='shutdown -P now'
 alias rcp='rsync --progress -ravzh'
-alias clear='cl'
 alias 'cd..'='cd ..'
 alias myip='curl ipinfo.io/ip'
 alias sus='systemctl suspend'
