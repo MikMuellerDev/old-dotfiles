@@ -147,6 +147,10 @@ alias wstart='myip && echo "\n" && sudo systemctl start wg-quick@wg0 && myip'
 alias wstop='myip && echo "\n" && sudo systemctl stop wg-quick@wg0 && myip'
 alias update='sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove'
 alias untis='untis'
+volume () {
+    ssh pi_box pactl set-sink-volume 0 "$1"
+    ssh pi_room pactl set-sink-volume 0 "$1"
+}
 
 cheat () { curl -s "cheat.sh/$1" | less; }
 timeout () { sleep "$1"; shift; bash -c "$*"; }
