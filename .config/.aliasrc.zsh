@@ -26,6 +26,12 @@ editrc () {
     }
     code ~/.dotfiles
 }
+
+facharbeit() {
+    code /home/mik/Documents/facharbeit/facharbeit
+    code /home/mik/Documents/facharbeit/facharbeit/main.pdf
+}
+
 untis () {
     user="$1"
     [[ -n "$user" ]] || {

@@ -34,4 +34,4 @@ source ~/.config/.aliasrc.zsh
 [[ $- != *i* ]] && return
 
 echo
-pfetch
+pixfetch
