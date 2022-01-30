@@ -28,14 +28,6 @@ editrc () {
     code ~/.dotfiles
 }
 
-<<<<<<< Updated upstream
-facharbeit() {
-    code /home/mik/Documents/facharbeit/facharbeit
-    code /home/mik/Documents/facharbeit/facharbeit/main.pdf
-}
-
-=======
->>>>>>> Stashed changes
 untis () {
     user="$1"
     [[ -n "$user" ]] || {
