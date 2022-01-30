@@ -5,7 +5,6 @@
   inactive_color_offset = 0.6647058823529411
   putty_paste_style_source_clipboard = True
   smart_copy = False
-  clear_select_on_copy = True
 [keybindings]
 [profiles]
   [[default]]

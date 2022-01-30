@@ -19,6 +19,7 @@ updaterc () {
     # Reload shell
     exec "$SHELL"
 }
+
 editrc () {
     [[ -d "$HOME/.dotfiles" ]] || {
         echo 'No .dotfiles folder at ~/.dotfiles'
@@ -27,16 +28,19 @@ editrc () {
     code ~/.dotfiles
 }
 
+<<<<<<< Updated upstream
 facharbeit() {
     code /home/mik/Documents/facharbeit/facharbeit
     code /home/mik/Documents/facharbeit/facharbeit/main.pdf
 }
 
+=======
+>>>>>>> Stashed changes
 untis () {
     user="$1"
     [[ -n "$user" ]] || {
         echo "No user specified"
-        return 1
+        return 11
     }
     date="$2"
     [[ -n "$date" ]] || {
@@ -143,6 +147,7 @@ alias sus='systemctl suspend'
 alias rssdm='sudo systemctl restart sddm'
 alias lock='loginctl lock-session'
 alias sss='ssh cloud'
+alias ssss='ssh cloud-temp'
 alias con='ssh contabo'
 alias ssp='ssh pi-rack'
 alias sspr='ssh pi_room'
@@ -152,10 +157,14 @@ alias ssb='ssh pi_box'
 alias wstart='myip && echo "\n" && sudo systemctl start wg-quick@wg0 && myip'
 alias wstop='myip && echo "\n" && sudo systemctl stop wg-quick@wg0 && myip'
 alias update='sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove'
-alias untis='untis'
+
 volume () {
     ssh pi_box pactl set-sink-volume 0 "$1"
     ssh pi_room pactl set-sink-volume 0 "$1"
+}
+
+radigo () {
+    cd /home/mik/Downloads/radiGo/bin && ./radiGo-1.2.2
 }
 
 cheat () { curl -s "cheat.sh/$1" | less; }

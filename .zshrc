@@ -30,6 +30,7 @@ ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=208,bold
 ZSH_HIGHLIGHT_STYLES[assign]=fg=14
 
 source ~/.config/.aliasrc.zsh
+source /home/mik/.config/.aliasrc.zsh
 
 [[ $- != *i* ]] && return
 
