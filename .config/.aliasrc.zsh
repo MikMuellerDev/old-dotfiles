@@ -159,6 +159,22 @@ radigo () {
     cd /home/mik/Downloads/radiGo/bin && ./radiGo-1.2.2
 }
 
+postclip () {
+    getclip | quick-clip set -i
+}
+
+fetchclip () {
+    quick-clip get -o | setclip
+}
+
+postfile () {
+    cat "$1" | quick-clip set -i
+}
+
+fetchfile () {
+    quick-clip get -o >> "$1"
+}
+
 cheat () { curl -s "cheat.sh/$1" | less; }
 timeout () { sleep "$1"; shift; bash -c "$*"; }
 colors () {
