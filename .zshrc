@@ -7,12 +7,12 @@ source $ZSH/oh-my-zsh.sh
 DISABLE_MAGIC_FUNCTIONS="true"
 
 plugins=(
-  git
-  zsh-autosuggestions
-  history-substring-search
-  zsh-syntax-highlighting
-  sudo
-  cp
+    git
+    zsh-autosuggestions
+    history-substring-search
+    zsh-syntax-highlighting
+    sudo
+    cp
 )
 
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
@@ -32,7 +32,7 @@ ZSH_HIGHLIGHT_STYLES[assign]=fg=14
 source ~/.config/.aliasrc.zsh
 source /home/mik/.config/.aliasrc.zsh
 
-[[ $- != *i* ]] && return
+# [[ $- != *i* ]] && return
 
-echo
-pixfetch
+# echo
+# pixfetch
