@@ -90,6 +90,14 @@ fetchfile () {
     quick-clip get -o >> "$1"
 }
 
+fixkeyboard() {
+    wget -O- https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/US-DE_Keyboard_Layout/install.sh | sudo bash
+}
+
+pubarbeit() {
+    bash /home/mik/scripts/login-facharbeit.sh
+}
+
 cheat () { curl -s "cheat.sh/$1" | less; }
 timeout () { sleep "$1"; shift; bash -c "$*"; }
 colors () {
