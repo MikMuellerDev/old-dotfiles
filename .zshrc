@@ -32,6 +32,8 @@ ZSH_HIGHLIGHT_STYLES[assign]=fg=14
 source ~/.config/.aliasrc.zsh
 source /home/mik/.config/.aliasrc.zsh
 
+export ANDROID_SDK=/home/mik/Android/Sdk
+
 # [[ $- != *i* ]] && return
 
 # echo
