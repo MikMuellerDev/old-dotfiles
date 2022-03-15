@@ -81,8 +81,13 @@ fixkeyboard() {
     wget -O- https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/US-DE_Keyboard_Layout/install.sh | sudo bash
 }
 
-pubarbeit() {
-    bash /home/mik/scripts/login-facharbeit.sh
+updateall() {
+   ssh -t cloud update
+   ssh -t contabo update
+   ssh -t pi-rack update
+   ssh -t pi_room update
+   ssh -t pi_box update
+   ssh -t pi_dev update
 }
 
 cheat () { curl -s "cheat.sh/$1" | less; }
