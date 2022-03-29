@@ -33,7 +33,6 @@ command -v wl-copy >/dev/null && { alias setclip='wl-copy'; alias getclip='wl-pa
 
 
 alias lelcat='bash -c "$(curl -fsSL https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/meow.sh)"'
-alias poof='shutdown -P now'
 alias rcp='rsync --progress -ravzh'
 alias 'cd..'='cd ..'
 alias myip='curl ipinfo.io/ip'
@@ -52,13 +51,11 @@ alias wstart='myip && echo "\n" && sudo systemctl start wg-quick@wg0 && myip'
 alias wstop='myip && echo "\n" && sudo systemctl stop wg-quick@wg0 && myip'
 alias update='sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove'
 
-volume () {
-    ssh pi_box pactl set-sink-volume 0 "$1"
-    ssh pi_room pactl set-sink-volume 0 "$1"
-}
 
-radigo () {
-    cd /home/mik/Downloads/radiGo/bin && ./radiGo-1.2.2
+poof() {
+    shutdown -P now
+    echo "sleep(90) \n switch('s4', off)" |  homescript -i "http://cloud.box:8123" -u admin -p admin -s 
+    # Password is not secret, used for testing
 }
 
 postclip () {
