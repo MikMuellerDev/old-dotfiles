@@ -54,8 +54,11 @@ alias update='sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo 
 
 poof() {
     shutdown -P now
-    echo "sleep(90) \n switch('s4', off)" |  homescript -i "http://cloud.box:8123" -u admin -p admin -s 
+}
+
+cut-power() {
     # Password is not secret, used for testing
+    homescript -i "http://cloud.box:8123" -u admin -p admin pipe "switch('s4', off)"
 }
 
 postclip () {
@@ -79,12 +82,12 @@ fixkeyboard() {
 }
 
 updateall() {
-   ssh -t cloud update
-   ssh -t contabo update
-   ssh -t pi-rack update
-   ssh -t pi_room update
-   ssh -t pi_box update
-   ssh -t pi_dev update
+    ssh -t cloud update
+    ssh -t contabo update
+    ssh -t pi-rack update
+    ssh -t pi_room update
+    ssh -t pi_box update
+    ssh -t pi_dev update
 }
 
 cheat () { curl -s "cheat.sh/$1" | less; }
