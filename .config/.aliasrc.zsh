@@ -32,6 +32,7 @@ command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getcl
 command -v wl-copy >/dev/null && { alias setclip='wl-copy'; alias getclip='wl-paste'; }
 
 
+alias cl='clear'
 alias lelcat='bash -c "$(curl -fsSL https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/meow.sh)"'
 alias rcp='rsync --progress -ravzh'
 alias 'cd..'='cd ..'
@@ -50,9 +51,11 @@ alias ssb='ssh pi_box'
 alias wstart='myip && echo "\n" && sudo systemctl start wg-quick@wg0 && myip'
 alias wstop='myip && echo "\n" && sudo systemctl stop wg-quick@wg0 && myip'
 alias update='sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove'
-
+alias gotest='richgo test ./...'
 
 poof() {
+    homescript -i "http://cloud.box:8123" -u admin -p admin run "/home/mik/.config/shutdown.hms" &
+    sleep 5
     shutdown -P now
 }
 
