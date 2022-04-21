@@ -33,8 +33,8 @@ command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getcl
 command -v wl-copy >/dev/null && { alias setclip='wl-copy'; alias getclip='wl-paste'; }
 
 
+alias cl='clear'
 alias lelcat='bash -c "$(curl -fsSL https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/meow.sh)"'
-alias poof='shutdown -P now'
 alias rcp='rsync --progress -ravzh'
 alias 'cd..'='cd ..'
 alias myip='curl ipinfo.io/ip'
@@ -52,14 +52,17 @@ alias ssb='ssh pi_box'
 alias wstart='myip && echo "\n" && sudo systemctl start wg-quick@wg0 && myip'
 alias wstop='myip && echo "\n" && sudo systemctl stop wg-quick@wg0 && myip'
 alias update='sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove'
+alias gotest='richgo test ./...'
 
-volume () {
-    ssh pi_box pactl set-sink-volume 0 "$1"
-    ssh pi_room pactl set-sink-volume 0 "$1"
+poof() {
+    homescript -i "http://cloud.box:8123" -u admin -p admin run "/home/mik/.config/shutdown.hms" &
+    sleep 5
+    shutdown -P now
 }
 
-radigo () {
-    cd /home/mik/Downloads/radiGo/bin && ./radiGo-1.2.2
+cut-power() {
+    # Password is not secret, used for testing
+    homescript -i "http://cloud.box:8123" -u admin -p admin pipe "switch('s4', off)"
 }
 
 postclip () {
@@ -83,12 +86,12 @@ fixkeyboard() {
 }
 
 updateall() {
-   ssh -t cloud update
-   ssh -t contabo update
-   ssh -t pi-rack update
-   ssh -t pi_room update
-   ssh -t pi_box update
-   ssh -t pi_dev update
+    ssh -t cloud update
+    ssh -t contabo update
+    ssh -t pi-rack update
+    ssh -t pi_room update
+    ssh -t pi_box update
+    ssh -t pi_dev update
 }
 
 cheat () { curl -s "cheat.sh/$1" | less; }
