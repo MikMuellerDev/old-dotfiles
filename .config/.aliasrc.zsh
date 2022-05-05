@@ -26,7 +26,7 @@ editrc () {
         echo 'No .dotfiles folder at ~/.dotfiles'
         return 2
     }
-    code ~/.dotfiles
+    nvim ~/.dotfiles
 }
 
 command -v xclip >/dev/null && { alias setclip='xclip -selection c'; alias getclip='xclip -selection c -o'; }
@@ -55,14 +55,17 @@ alias update='sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo 
 alias gotest='richgo test ./...'
 
 poof() {
-    homescript -i "http://cloud.box:8123" -u admin -p admin run "/home/mik/.config/shutdown.hms" &
-    sleep 5
+    # Only run Homescript if the alias function is executed on the Desktop-PC, not the laptop
+    if [[ "$(cat /proc/sys/kernel/hostname)" == "mik-pc" ]]; then
+        echo "$(cat /proc/sys/kernel/hostname)"
+        homescript pipe "
+            #Automated shutdown script for Smarthome v0.0.26-beta-rc.2, cli version v2.0.0
+            sleep(30)
+            switch('s4', off)
+        " &
+        sleep 5
+    fi
     shutdown -P now
-}
-
-cut-power() {
-    # Password is not secret, used for testing
-    homescript -i "http://cloud.box:8123" -u admin -p admin pipe "switch('s4', off)"
 }
 
 postclip () {
@@ -73,25 +76,8 @@ fetchclip () {
     quick-clip get -o | setclip
 }
 
-postfile () {
-    cat "$1" | quick-clip set -i
-}
-
-fetchfile () {
-    quick-clip get -o >> "$1"
-}
-
 fixkeyboard() {
     wget -O- https://raw.githubusercontent.com/RubixDev/HandyLinuxStuff/main/US-DE_Keyboard_Layout/install.sh | sudo bash
-}
-
-updateall() {
-    ssh -t cloud update
-    ssh -t contabo update
-    ssh -t pi-rack update
-    ssh -t pi_room update
-    ssh -t pi_box update
-    ssh -t pi_dev update
 }
 
 cheat () { curl -s "cheat.sh/$1" | less; }
@@ -101,6 +87,3 @@ colors () {
         print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}
     done
 }
-
-alias sr='screen -r'
-alias sls='screen -ls'
