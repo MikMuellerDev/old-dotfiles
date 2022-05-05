@@ -11,3 +11,5 @@ install_file .zshrc
 install_file .config/.aliasrc.zsh
 install_file .tmux.conf
 install_file .config/terminator/config
+install_file .config/alacritty.yml
+install_file .config/nvim/init.vim

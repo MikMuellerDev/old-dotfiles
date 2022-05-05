@@ -34,6 +34,12 @@ source /home/mik/.config/.aliasrc.zsh
 
 export ANDROID_SDK=/home/mik/Android/Sdk
 
+export GOBIN=/home/mik/go/bin
+export GOPATH=/home/mik/go
+export PATH=$PATH:$GOBIN
+
+export PATH=$PATH:/usr/lib/ruby/gems/3.0.0
+
 # [[ $- != *i* ]] && return
 
 # echo
