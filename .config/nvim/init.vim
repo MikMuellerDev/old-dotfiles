@@ -62,6 +62,9 @@ Plug 'hrsh7th/nvim-cmp'
 " Discord presence
 Plug 'andweeb/presence.nvim'
 
+" Homescript
+Plug 'mikmuellerdev/vim-homescript'
+
 call plug#end()
 
 " Automatically install missing plugins
