@@ -64,8 +64,10 @@ poof() {
             switch('s4', off)
         " &
         sleep 5
+        shutdown -P now
+    else
+        shutdown -P now
     fi
-    shutdown -P now
 }
 
 postclip () {
