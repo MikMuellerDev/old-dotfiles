@@ -34,6 +34,7 @@ source /home/mik/.config/.aliasrc.zsh
 
 export ANDROID_SDK=/home/mik/Android/Sdk
 
+export PATH=$PATH:/usr/local/go/bin
 export GOBIN=/home/mik/go/bin
 export GOPATH=/home/mik/go
 export PATH=$PATH:$GOBIN
