@@ -4,9 +4,9 @@ alias mv='mv -iv'
 alias rm='rm -v'
 alias ip='ip -c'
 alias cl='clear'
-alias l='exa -lhg --icons --octal-permissions'
-alias la='exa -lahg --icons --octal-permissions'
-alias ll='exa -lhg --icons --octal-permissions'
+alias l='exa -lhg --icons --octal-permissions --git'
+alias la='l -a'
+alias ll=l
 
 updaterc () {
     current_dir="$PWD"
@@ -54,7 +54,7 @@ alias wstop='myip && echo "\n" && sudo systemctl stop wg-quick@wg0 && myip'
 alias update='sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove'
 alias gotest='richgo test ./...'
 
-poof() {
+apoof() {
     # Only run Homescript if the alias function is executed on the Desktop-PC, not the laptop
     if [[ "$(cat /proc/sys/kernel/hostname)" == "mik-pc" ]]; then
         echo "$(cat /proc/sys/kernel/hostname)"
