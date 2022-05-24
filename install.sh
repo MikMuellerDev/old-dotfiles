@@ -13,3 +13,8 @@ install_file .tmux.conf
 install_file .config/terminator/config
 install_file .config/alacritty.yml
 install_file .config/nvim/init.vim
+install_file .config/bspwm/bspwmrc
+install_file .config/sxhkd/sxhkdrc
+install_file .config/dunst/dunstrc
+install_file .config/picom.conf
+install_file .config/polybar/config.ini
