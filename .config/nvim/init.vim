@@ -36,6 +36,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'itchyny/lightline.vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'ellisonleao/glow.nvim', {'branch': 'main'}
 
 " Fuzzy Finder
 Plug 'airblade/vim-rooter'
@@ -81,6 +82,9 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 call plug#end()
+
+" Glow Markdown preview
+let g:glow_border = "rounded"
 
 " Automatically install missing plugins
 autocmd VimEnter *

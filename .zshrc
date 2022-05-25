@@ -45,6 +45,10 @@ export GOPROXY=http://proxy.gp,direct
 # Ruby-Gems path
 export PATH=$PATH:/usr/lib/ruby/gems/3.0.0
 
+# Default editor
+export EDITOR=vim
+
+[[ -s /etc/profile.d/autojump.sh ]] && source /etc/profile.d/autojump.sh
 # [[ $- != *i* ]] && return
 # echo
 # pixfetch
