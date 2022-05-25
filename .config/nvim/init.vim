@@ -94,6 +94,7 @@ autocmd VimEnter *
 
 " Theming
 syntax on
+set nofoldenable
 colorscheme one
 set background=dark
 let g:one_allow_italics = 1
