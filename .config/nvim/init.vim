@@ -6,10 +6,11 @@ set clipboard+=unnamedplus " Use system clipboard
 let mapleader = "\<Space>"
 set number relativenumber
 set linebreak
+set hidden " Keep unused buffers open 
 set showbreak=↪
 set nowrap
 set nofoldenable
-set scrolloff=3 " Minimum lines to keep above and below cursor when scrolling
+set scrolloff=8 " Minimum lines to keep above and below cursor when scrolling
 set noshowmode " Do not display current mode because we have lightline
 set undofile " Preserve undo history when exiting vim
 set spell " Enable spellcheck
@@ -101,6 +102,7 @@ autocmd VimEnter *
 syntax on
 colorscheme one
 set background=dark
+set colorcolumn=100 " Column marker in order to prevent long lines
 let g:one_allow_italics = 1
 let g:airline_theme='one'
 let g:lightline = { 'colorscheme': 'one' }
@@ -219,7 +221,7 @@ map <Leader>n :<C-U>call append(line("."), repeat([''], v:count1))<CR>
 " noselect: Do not select, force user to select one from the menu
 set completeopt=menuone,noinsert,noselect
 set cmdheight=2 " Better display for messages
-set updatetime=300 " You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=50 " Faster refresh times for error checking and linting
 
 " ripgrep
 if executable('rg')
@@ -261,9 +263,14 @@ let g:context_filetype#filetypes.svelte =
 \   {'filetype' : 'css', 'start' : '<style \?.*>', 'end' : '</style>'},
 \ ]
 
+let g:svelte_preprocessor_tags = [
+  \ { 'name': 'ts', 'tag': 'script', 'as': 'typescript' }
+  \ ]
+let g:svelte_preprocessors = ['ts', 'scss']
 let g:ft = ''
 
 " Svelte ts and scss syntax highlighting
+" let g:svelte_preprocessors = ['typescript', 'scss']
 let g:vim_svelte_plugin_use_typescript=1
 let g:vim_svelte_plugin_use_sass=1
 
