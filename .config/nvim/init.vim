@@ -8,6 +8,7 @@ set number relativenumber
 set linebreak
 set showbreak=↪
 set nowrap
+set nofoldenable
 set scrolloff=3 " Minimum lines to keep above and below cursor when scrolling
 set noshowmode " Do not display current mode because we have lightline
 set undofile " Preserve undo history when exiting vim
@@ -20,6 +21,8 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 
+let g:is_android = executable('uname') && system('uname -o') == "Android\n"
+
 " Plugins
 call plug#begin()
 
@@ -31,16 +34,15 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'max397574/better-escape.nvim'
 Plug 'andymass/vim-matchup'
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-abolish'
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'ellisonleao/glow.nvim', {'branch': 'main'}
 
 " Fuzzy Finder
 Plug 'airblade/vim-rooter'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
@@ -49,7 +51,8 @@ Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
 Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'plasticboy/vim-markdown'
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
 Plug 'leafOfTree/vim-svelte-plugin'
 Plug 'pangloss/vim-javascript'
 Plug 'HerringtonDarkholme/yats.vim'
@@ -61,8 +64,10 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'habamax/vim-godot'
 
 " Completion
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': { -> 'make' } }
 Plug 'tzachar/fuzzy.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'tzachar/cmp-fuzzy-buffer'
@@ -81,10 +86,10 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-call plug#end()
+" Markdown preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
-" Glow Markdown preview
-let g:glow_border = "rounded"
+call plug#end()
 
 " Automatically install missing plugins
 autocmd VimEnter *
@@ -94,7 +99,6 @@ autocmd VimEnter *
 
 " Theming
 syntax on
-set nofoldenable
 colorscheme one
 set background=dark
 let g:one_allow_italics = 1
@@ -122,6 +126,9 @@ set softtabstop=4   " number of spaces in tab when editing
 set shiftwidth=4    " number of spaces to use for autoindent
 set expandtab       " expand tab to spaces so that tabs are spaces
 set shiftround
+autocmd FileType markdown setlocal ts=2 sts=2 sw=2
+autocmd FileType json setlocal ts=2 sts=2 sw=2
+autocmd FileType make setlocal ts=4 sts=0 sw=4 noexpandtab
 
 " Proper search
 set incsearch
@@ -197,6 +204,15 @@ nmap <leader>gc :Git commit<CR>
 nmap <leader>gP :Git push<CR>
 nmap <leader>gp :Git pull<CR>
 
+" Markdown
+map <Leader>mp :MarkdownPreview<CR>
+map <Leader>mP :MarkdownPreviewStop<CR>
+map <Leader>mf :TableFormat<CR>
+
+" Insert line above/below cursor without insert mode
+map <Leader>N :<C-U>call append(line(".")-1, repeat([''], v:count1))<CR>
+map <Leader>n :<C-U>call append(line("."), repeat([''], v:count1))<CR>
+
 " Completion
 " menuone: popup even when there's only one match
 " noinsert: Do not insert text until a selection is made
@@ -214,14 +230,15 @@ noremap <leader>s :Rg<space>
 let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   'rg --column --line-number --no-heading --color=always -. '.shellescape(<q-args>), 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
-  return base == '.' ? 'fd --type file --follow -HE .git' : printf('fd --type file --follow -HE .git | proximity-sort %s', shellescape(expand('%')))
+  let fd = 'fd -tf -LHE .git -E "*.png" -E "*.jpg" -E "*.jpeg" -E "*.gif" -E "*.xcf" -E "*.zip" -E "*.ttf" -E "*.import"'
+  return base == '.' ? fd : printf('%s | proximity-sort %s', fd, shellescape(expand('%')))
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
@@ -329,7 +346,6 @@ require('nvim-lsp-installer').setup { on_attach = on_attach, automatic_installat
 require('lspconfig').rust_analyzer.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').vimls.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').bashls.setup { on_attach = on_attach, capabilities = capabilities }
-require('lspconfig').clangd.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').cssls.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').dockerls.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').emmet_ls.setup { on_attach = on_attach, capabilities = capabilities }
@@ -337,14 +353,17 @@ require('lspconfig').golangci_lint_ls.setup { on_attach = on_attach, capabilitie
 require('lspconfig').gopls.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').html.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').jsonls.setup { on_attach = on_attach, capabilities = capabilities }
-require('lspconfig').jdtls.setup { on_attach = on_attach, capabilities = capabilities }
-require('lspconfig').kotlin_language_server.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').ltex.setup { on_attach = on_attach, capabilities = capabilities } -- or texlab
 require('lspconfig').sumneko_lua.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').svelte.setup { on_attach = on_attach, capabilities = capabilities }
-require('lspconfig').taplo.setup { on_attach = on_attach, capabilities = capabilities }
 require('lspconfig').tsserver.setup { on_attach = on_attach, capabilities = capabilities }
--- TODO: choose markdown LSP
+if vim.g.is_android == 0 then
+    require('lspconfig').jdtls.setup { on_attach = on_attach, capabilities = capabilities }
+    require('lspconfig').kotlin_language_server.setup { on_attach = on_attach, capabilities = capabilities }
+    require('lspconfig').gdscript.setup { on_attach = on_attach, capabilities = capabilities }
+    require('lspconfig').clangd.setup { on_attach = on_attach, capabilities = capabilities }
+    require('lspconfig').taplo.setup { on_attach = on_attach, capabilities = capabilities }
+end
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = true,
@@ -372,4 +391,3 @@ require("better_escape").setup {
 }
 
 END
-
