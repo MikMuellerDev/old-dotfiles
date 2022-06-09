@@ -45,6 +45,9 @@ export GOPROXY=http://proxy.gp,direct
 # Ruby-Gems path
 export PATH=$PATH:/usr/lib/ruby/gems/3.0.0
 
+# NVM
+source /usr/share/nvm/init-nvm.sh
+
 # Default editor
 export EDITOR=vim
 

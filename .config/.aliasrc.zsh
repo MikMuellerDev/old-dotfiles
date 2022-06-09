@@ -52,7 +52,18 @@ alias ssb='ssh pi_box'
 alias wstart='myip && echo "\n" && sudo systemctl start wg-quick@wg0 && myip'
 alias wstop='myip && echo "\n" && sudo systemctl stop wg-quick@wg0 && myip'
 alias update='sudo apt update && sudo apt upgrade && sudo apt autoclean && sudo apt autoremove'
-alias gotest='richgo test ./...'
+
+# Go development
+alias gotest='richgo test -v -race ./...'
+alias gorun='richgo run -v -race .'
+
+# Smarthome development
+alias mdev='make vite-dev'
+alias mrun='make run'
+alias mrel='make release'
+alias mtes='make test'
+alias shdb='docker exec -it smarthome-mariadb  mysql -u root -p'
+alias shtdb='docker exec -it smarthome-mariadb-testing mysql -u root -p'
 
 apoof() {
     # Only run Homescript if the alias function is executed on the Desktop-PC, not the laptop
